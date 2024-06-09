@@ -34,7 +34,7 @@ public class OrderPage {
     }
 
     public void waitForLoadOrderPage() {
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(getTitleOrder()));
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(getTitleOrder()));
     }
 
     public void setDataFieldsAndClickNext(String valueName, String valueSurname, String valueAddress,
@@ -48,7 +48,7 @@ public class OrderPage {
     }
 
     public void waitForLoadRentPage() {
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(getTitleRent()));
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(getTitleRent()));
     }
 
     public void setOtherFieldsAndClickOrder(String valueDateOrder, String valuePeriod, String valueColor, String valueComment) {

@@ -35,7 +35,7 @@ public class MainPage {
 
     public void waitForLoadPage() {
         WebElement imageElement = driver.findElement(imageScooter);
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(imageScooter));
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(imageScooter));
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", imageElement);
     }
 
@@ -55,7 +55,7 @@ public class MainPage {
 
     public boolean isButtonClickable(WebElement faqElement) {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(2)).until(ExpectedConditions.elementToBeClickable(faqElement.findElement(accordionButton)));
+            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(faqElement.findElement(accordionButton)));
             return true;
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
