@@ -24,7 +24,7 @@ public class FaqTest {
     private final int index; // Индекс из списка вопросов
     private final String questionText; // Сам вопрос
     private final String checkedText; // Проверяемый текст
-    private static boolean isDebugging; // Это процесс отладки
+    private static boolean isDebugging; // Процесс отладки
 
     public FaqTest(int index, String questionText, String checkedText) {
         this.index = index;

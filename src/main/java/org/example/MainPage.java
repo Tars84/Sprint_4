@@ -12,8 +12,8 @@ import java.util.List;
 public class MainPage {
 
     private final WebDriver driver;
-    private final By buttonOrderTop = By.xpath(".//div[starts-with(@class,'Header_Nav')]//button[text()='Заказать']"); // Верхняя кнопка заказа
-    private final By buttonOrderBottom = By.xpath(".//div[contains(@class,'FinishButton')]//button[text()='Заказать']"); // Нижняя кнопка заказа
+    private final By buttonOrderTop = By.xpath(".//button[@class='Button_Button__ra12g']"); // Верхняя кнопка заказа
+    private final By buttonOrderBottom = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']"); // Нижняя кнопка заказа
     private final By sectionFaq = By.xpath(".//div[starts-with(@class,'Home_FAQ')]"); // Вопросы о важном
     private final By accordionItem = By.className("accordion__item"); // Элемент секции
     private final By accordionButton = By.className("accordion__button"); // Кнопка с вопросом
@@ -21,15 +21,15 @@ public class MainPage {
     private final By imageScooter = By.xpath(".//img[@alt = 'Scooter blueprint']");
     private final By buttonAcceptCookie = By.id("rcc-confirm-button");
 
-    // Конструктор класса
+    // конструктор класса
     public MainPage(WebDriver driver){
         this.driver = driver;
     }
 
-    // Ожидание прогрузки вопросов о важном
+    // ждем пока прогрузятся вопросы о важном
     public void waitForLoadFaq() {
         WebElement faqElement = driver.findElement(sectionFaq);
-        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(sectionFaq));
+        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(sectionFaq));
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", faqElement);
     }
 
@@ -48,9 +48,9 @@ public class MainPage {
         }
     }
 
-    // Возврат списка всех вопросов-ответов
+    // возвращает список всех вопросов-ответов
     public List<WebElement> getFaqItems(){
-       return driver.findElements(accordionItem);
+        return driver.findElements(accordionItem);
     }
 
     public boolean isButtonClickable(WebElement faqElement) {
@@ -60,6 +60,7 @@ public class MainPage {
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
         }
+        //return faqElement.findElement(accordionButton).isEnabled();
     }
 
     public String getQuestion(WebElement faqElement) {
