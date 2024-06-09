@@ -12,6 +12,9 @@ import java.util.List;
 public class MainPage {
 
     private final WebDriver driver;
+    private final By homePage = By.xpath(".//div[@class='Home_HomePage__ZXKIX']"); // Главная страница Самоката
+    private final By buttonStatus =  By.xpath(".//button[@class='Header_Link__1TAG7']"); // Кнопка "Статус заказа"
+    private final By inputStatus = By.xpath(".//input[@class='Input_Input__1iN_Z Header_Input__xIoUq']"); // Поле "Введите номер заказа"
     private final By buttonOrderTop = By.xpath(".//button[@class='Button_Button__ra12g']"); // Верхняя кнопка заказа
     private final By buttonOrderBottom = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']"); // Нижняя кнопка заказа
     private final By sectionFaq = By.xpath(".//div[starts-with(@class,'Home_FAQ')]"); // Вопросы о важном
@@ -26,7 +29,7 @@ public class MainPage {
         this.driver = driver;
     }
 
-    // ждем пока прогрузятся вопросы о важном
+    // Прогрузка вопросов о важном
     public void waitForLoadFaq() {
         WebElement faqElement = driver.findElement(sectionFaq);
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(sectionFaq));
@@ -48,7 +51,7 @@ public class MainPage {
         }
     }
 
-    // возвращает список всех вопросов-ответов
+    // Возврат списка всех вопросов-ответов
     public List<WebElement> getFaqItems(){
         return driver.findElements(accordionItem);
     }
@@ -60,7 +63,6 @@ public class MainPage {
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
         }
-        //return faqElement.findElement(accordionButton).isEnabled();
     }
 
     public String getQuestion(WebElement faqElement) {
