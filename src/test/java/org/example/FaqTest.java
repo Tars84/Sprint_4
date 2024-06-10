@@ -92,7 +92,7 @@ public class FaqTest {
 
         if (!buttonClickable) return;
 
-        faqElement.click();
+        mainPage.clickFaqElement(faqElement);
 
         String faqQuestion;
         faqQuestion = mainPage.getQuestion(faqElement);

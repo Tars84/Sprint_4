@@ -29,7 +29,7 @@ public class MainPage {
         this.driver = driver;
     }
 
-    // Прогрузка вопросов о важном
+    // ждем пока прогрузятся вопросы о важном
     public void waitForLoadFaq() {
         WebElement faqElement = driver.findElement(sectionFaq);
         new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(sectionFaq));
@@ -42,6 +42,11 @@ public class MainPage {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", imageElement);
     }
 
+    public void clickFaqElement(WebElement faqElement) {
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", faqElement);
+        faqElement.click();
+    }
+
     public boolean isElementExist(By locatorBy) {
         try {
             driver.findElement(locatorBy);
@@ -51,7 +56,7 @@ public class MainPage {
         }
     }
 
-    // Возврат списка всех вопросов-ответов
+    // возвращает список всех вопросов-ответов
     public List<WebElement> getFaqItems(){
         return driver.findElements(accordionItem);
     }
@@ -63,6 +68,7 @@ public class MainPage {
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
         }
+        //return faqElement.findElement(accordionButton).isEnabled();
     }
 
     public String getQuestion(WebElement faqElement) {
