@@ -1,5 +1,6 @@
 package org.example;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,10 +11,11 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.remote.Augmenter;
+
 import static org.junit.Assert.assertTrue;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
-import org.openqa.selenium.remote.Augmenter;
 
 @RunWith(Parameterized.class)
 public class FaqTest {
@@ -24,7 +26,7 @@ public class FaqTest {
     private final int index; // Индекс из списка вопросов
     private final String questionText; // Сам вопрос
     private final String checkedText; // Проверяемый текст
-    private static boolean isDebugging; // Процесс отладки
+    private static boolean isDebugging; // Это процесс отладки
 
     public FaqTest(int index, String questionText, String checkedText) {
         this.index = index;
@@ -42,18 +44,18 @@ public class FaqTest {
                         "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
                 {1, "Хочу сразу несколько самокатов! Так можно?",
                         "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете " +
-                        "просто сделать несколько заказов — один за другим."},
+                                "просто сделать несколько заказов — один за другим."},
                 {2, "Как рассчитывается время аренды?",
                         "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт " +
-                        "времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли " +
-                        "самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30."},
+                                "времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли " +
+                                "самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30."},
                 {3, "Можно ли заказать самокат прямо на сегодня?",
                         "Только начиная с завтрашнего дня. Но скоро станем расторопнее."},
                 {4, "Можно ли продлить заказ или вернуть самокат раньше?",
                         "Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010."},
                 {5, "Вы привозите зарядку вместе с самокатом?",
                         "Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если будете " +
-                         "кататься без передышек и во сне. Зарядка не понадобится."},
+                                "кататься без передышек и во сне. Зарядка не понадобится."},
                 {6, "Можно ли отменить заказ?",
                         "Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои."},
                 {7, "Я жизу за МКАДом, привезёте?",
@@ -62,18 +64,13 @@ public class FaqTest {
     }
 
     @BeforeClass
-    public static void initialSetup() {
-        System.setProperty("webdriver.chrome.driver","C:\\chromedriver\\chromedriver.exe");
-        isDebugging = false;
-
-        // Открываем страничку
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
+    public  static void initialSetup() {
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver = new Augmenter().augment(driver);
         driver.get("https://qa-scooter.praktikum-services.ru/");
         mainPage = new MainPage(driver);
         mainPage.waitForLoadFaq();
+        isDebugging = false;
 
         // найдем все вопросы
         faqElements = mainPage.getFaqItems();
@@ -90,9 +87,8 @@ public class FaqTest {
         boolean buttonClickable = mainPage.isButtonClickable(faqElement);
         assertTrue("Элемент "+index+" не кликабелен", buttonClickable);
 
-        if (!buttonClickable) return;
 
-        mainPage.clickFaqElement(faqElement);
+        faqElement.click();
 
         String faqQuestion;
         faqQuestion = mainPage.getQuestion(faqElement);

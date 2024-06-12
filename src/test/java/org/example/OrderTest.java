@@ -1,6 +1,8 @@
 package org.example;
 
 import static org.junit.Assert.assertTrue;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.Augmenter;
 import org.junit.BeforeClass;
@@ -64,7 +66,8 @@ public class OrderTest {
 
     @BeforeClass
     public static void initialOrder() {
-        System.setProperty("webdriver.chrome.driver","C:\\chromedriver\\chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
 
         // Открываем страничку
         ChromeOptions options = new ChromeOptions();

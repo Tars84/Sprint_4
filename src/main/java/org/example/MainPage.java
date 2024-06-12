@@ -12,15 +12,12 @@ import java.util.List;
 public class MainPage {
 
     private final WebDriver driver;
-    private final By homePage = By.xpath(".//div[@class='Home_HomePage__ZXKIX']"); // Главная страница Самоката
-    private final By buttonStatus =  By.xpath(".//button[@class='Header_Link__1TAG7']"); // Кнопка "Статус заказа"
-    private final By inputStatus = By.xpath(".//input[@class='Input_Input__1iN_Z Header_Input__xIoUq']"); // Поле "Введите номер заказа"
-    private final By buttonOrderTop = By.xpath(".//button[@class='Button_Button__ra12g']"); // Верхняя кнопка заказа
-    private final By buttonOrderBottom = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']"); // Нижняя кнопка заказа
-    private final By sectionFaq = By.xpath(".//div[starts-with(@class,'Home_FAQ')]"); // Вопросы о важном
-    private final By accordionItem = By.className("accordion__item"); // Элемент секции
-    private final By accordionButton = By.className("accordion__button"); // Кнопка с вопросом
-    private final By accordionPanel = By.className("accordion__panel"); // Панель с ответом
+    private final By buttonOrderTop = By.xpath(".//div[starts-with(@class,'Header_Nav')]//button[text()='Заказать']"); // локатор кнопки заказа верхней
+    private final By buttonOrderBottom = By.xpath(".//div[contains(@class,'FinishButton')]//button[text()='Заказать']"); // локатор кнопки заказа нижней
+    private final By sectionFaq = By.xpath(".//div[starts-with(@class,'Home_FAQ')]"); // секция Вопросы о важном
+    private final By accordionItem = By.className("accordion__item"); // элемент секции
+    private final By accordionButton = By.className("accordion__button"); // кнопка с вопросом
+    private final By accordionPanel = By.className("accordion__panel"); // панель с ответом
     private final By imageScooter = By.xpath(".//img[@alt = 'Scooter blueprint']");
     private final By buttonAcceptCookie = By.id("rcc-confirm-button");
 
@@ -32,19 +29,14 @@ public class MainPage {
     // ждем пока прогрузятся вопросы о важном
     public void waitForLoadFaq() {
         WebElement faqElement = driver.findElement(sectionFaq);
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions.visibilityOfElementLocated(sectionFaq));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(sectionFaq));
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", faqElement);
     }
 
     public void waitForLoadPage() {
         WebElement imageElement = driver.findElement(imageScooter);
-        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(imageScooter));
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(imageScooter));
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", imageElement);
-    }
-
-    public void clickFaqElement(WebElement faqElement) {
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", faqElement);
-        faqElement.click();
     }
 
     public boolean isElementExist(By locatorBy) {
@@ -63,7 +55,7 @@ public class MainPage {
 
     public boolean isButtonClickable(WebElement faqElement) {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(faqElement.findElement(accordionButton)));
+            new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(faqElement.findElement(accordionButton)));
             return true;
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
@@ -100,3 +92,4 @@ public class MainPage {
     }
 
 }
+
